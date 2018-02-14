@@ -1,5 +1,6 @@
-const { resolve } = require('path');
+/*eslint-disable */
 const webpack = require('webpack');
+const { resolve } = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
@@ -18,7 +19,7 @@ module.exports = {
   },
 
   resolve: {
-    extensions: [ '.js', '.jsx' ]
+    extensions: ['.js', '.jsx']
   },
 
   devtool: '#source-map',
@@ -33,28 +34,51 @@ module.exports = {
     rules: [
       {
         test: /\.jsx?$/,
+        enforce: "pre",
+        loader: "eslint-loader",
+        exclude: /node_modules/,
+        options: {
+          emitWarning: true,
+          configFile: "./.eslintrc.json"
+          }
+        },
+        {
+        test: /\.jsx?$/,
         loader: "babel-loader",
         exclude: /node_modules/,
         options: {
           presets: [
             ["es2015", {"modules": false}],
-            "react"
+            "react",
           ],
           plugins: [
-            "react-hot-loader/babel"
+            "react-hot-loader/babel",
+            "styled-jsx/babel"
           ]
         }
       },
+      {
+        test: /\.(png|gif|jp(e*)g|svg)$/,
+        use: {
+          loader: 'url-loader',
+          options: {
+            limit: 8000,
+            name: 'images/[hash]-[name].[ext]'
+          }
+        }
+      }
     ],
   },
+
   plugins: [
-   new webpack.HotModuleReplacementPlugin(),
-   new webpack.NamedModulesPlugin(),
-   new HtmlWebpackPlugin({
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NamedModulesPlugin(),
+    new HtmlWebpackPlugin({
       template:'template.ejs',
       appMountId: 'react-app-root',
       title: 'React Help Queue',
       filename: resolve(__dirname, "build", "index.html"),
     }),
- ]
+  ]
 };
+/*eslint-enable */
