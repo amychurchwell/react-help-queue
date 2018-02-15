@@ -26,11 +26,11 @@ class NewTicketControl extends React.Component {
     } else {
       currentlyVisibleContent = <ConfirmationQuestions onTroubleshootingConfirmation={this.handleTroubleshootingConfirmation}/>;
     }
-     return (
+    return (
       <div>
-      {currentlyVisibleContent}
-    </div>
-   );
+        {currentlyVisibleContent}
+      </div>
+    );
   }
 }
 
