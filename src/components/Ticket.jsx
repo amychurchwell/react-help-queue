@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Moment from 'moment';
+// import Moment from 'moment';
 
 function Ticket(props){
   const ticketInformation =
@@ -10,9 +10,9 @@ function Ticket(props){
       <p><em>{props.issue}</em></p>
       <hr/>
     </div>;
-  if(props.currentRouterPath === '/admin'){
+  if (props.currentRouterPath === '/admin'){
     return (
-      <div onClick={() => {alert('this ticket belongs to ' + props.names);}}>
+      <div onClick={() => {props.onTicketSelection(props.ticketId);}}>
         {ticketInformation}
       </div>
     );
@@ -30,7 +30,9 @@ Ticket.propTypes = {
   location: PropTypes.string.isRequired,
   issue: PropTypes.string,
   formattedWaitTime: PropTypes.string.isRequired,
-  currentRouterPath: PropTypes.string
+  currentRouterPath: PropTypes.string,
+  onTicketSelection: PropTypes.func,
+  ticketId: PropTypes.string.isRequired
 };
 
 export default Ticket;
